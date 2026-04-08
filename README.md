@@ -1,167 +1,187 @@
- #  Credit Card Fraud Detection
+# 💳 Credit Card Fraud Detection (Production-Ready ML Project)
 
 ##  Overview
 
-This project focuses on detecting fraudulent credit card transactions using Machine Learning. The model is trained on a highly imbalanced dataset and uses data balancing techniques to improve performance.
+This project builds a **fraud detection system** using Machine Learning on highly imbalanced financial transaction data. It demonstrates real-world challenges such as class imbalance, proper evaluation metrics, and an end-to-end ML pipeline.
 
 ---
 
-##  Problem Statement
+##  Key Highlights
 
-Credit card fraud detection is challenging because fraudulent transactions are extremely rare compared to legitimate ones. The objective is to build a model that can accurately identify fraud while minimizing false predictions.
+* ✔ Handled **extreme class imbalance (0.17% fraud cases)**
+* ✔ Applied **Random Undersampling**
+* ✔ Implemented **Feature Scaling (StandardScaler)**
+* ✔ Built **Logistic Regression model**
+* ✔ Evaluated using **Precision, Recall, F1-score, Confusion Matrix**
+* ✔ Achieved **~94% accuracy with strong classification performance**
 
 ---
 
 ## 📂 Dataset
 
-* Total Transactions: **284,807**
-* Features: **30 numerical features (V1–V28, Time, Amount)**
-* Target:
+* Transactions: **284,807**
+* Fraud cases: **492**
+* Features: **V1–V28 (PCA transformed), Time, Amount**
 
-  * `0` → Legitimate
-  * `1` → Fraudulent
+🔗 Dataset: [https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/data](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/data)
 
-🔗 Dataset Link: [https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/data]
- Note: Dataset is not included in this repository due to size constraints.
+ Dataset not included due to size constraints
 
 ---
 
-##  Approach
+##  End-to-End Approach
 
-### 1️⃣ Data Loading & Understanding
+### 🔹 1. Data Understanding
 
 * Loaded dataset using Pandas
-* Explored structure using `.head()`, `.tail()`, `.info()`
-* Observed all features are numerical
+* Explored structure using `.head()`, `.info()`
+* Verified all features are numerical
+* Confirmed **no missing values**
 
 ---
 
-### 2️⃣ Data Cleaning
+### 🔹 2. Problem Insight
 
-* Checked for missing values
-* Found **no null values**, so no cleaning required
+* Dataset is **highly imbalanced**:
 
----
+  * Legit: 284,315
+  * Fraud: 492
 
-### 3️⃣ Handling Imbalanced Data
-
-* Original distribution:
-
-  * Legit: **284,315**
-  * Fraud: **492**
-
-* Applied **Undersampling**:
-
-  * Selected 492 legit transactions
-  * Combined with 492 fraud transactions
-
-✔ Final dataset: **984 samples (balanced)**
+ Direct training would bias toward normal transactions
 
 ---
 
-### 4️⃣ Exploratory Data Analysis (EDA)
+### 🔹 3. Data Balancing
 
-* Compared statistical properties of fraud vs legit transactions
-* Analyzed transaction amount distributions
-* Used `groupby()` to observe feature differences
+* Applied **Random Undersampling**:
+
+  * Sampled 492 legitimate transactions
+  * Combined with 492 fraud cases
+
+✔ Final dataset: **Balanced (984 samples)**
 
 ---
 
-### 5️⃣ Feature Selection
+### 🔹 4. Exploratory Analysis
+
+* Compared fraud vs legitimate transactions
+* Analyzed statistical differences
+* Observed distinct behavioral patterns
+
+---
+
+### 🔹 5. Feature Engineering
 
 * Features (X): All columns except `Class`
 * Target (Y): `Class`
 
 ---
 
-### 6️⃣ Train-Test Split
+### 🔹 6. Feature Scaling (Improvement)
 
-* Split ratio: **80% training / 20% testing**
-* Used `stratify` to maintain class balance
-
----
-
-### 7️⃣ Model Training
-
-* Model used: **Logistic Regression**
-* Trained on balanced dataset
+* Applied **StandardScaler**
+* Improved model convergence and stability
 
 ---
 
-### 8️⃣ Model Evaluation
+### 🔹 7. Train-Test Split
 
-* Training Accuracy: **95.42%**
-* Testing Accuracy: **94.41%**
+* 80% training / 20% testing
+* Used **stratified sampling** to maintain balance
 
-✔ Model performs well with good generalization
+---
+
+### 🔹 8. Model Training
+
+* Algorithm: **Logistic Regression (max_iter=1000)**
+* Advantages:
+
+  * Fast and interpretable
+  * Works well for binary classification
+
+---
+
+### 🔹 9. Model Evaluation
+
+| Metric            | Score  |
+| ----------------- | ------ |
+| Training Accuracy | 95.42% |
+| Testing Accuracy  | 94.41% |
+
+---
+
+### 🔹 10. Advanced Evaluation Metrics (Key Upgrade)
+
+* **Precision** → Measures correctness of fraud predictions
+* **Recall** → Measures how many fraud cases were detected
+* **F1-score** → Balance between precision and recall
+
+✔ These metrics are critical for fraud detection systems
+
+---
+
+### 🔹 11. Confusion Matrix Analysis
+
+* Visualized model performance using heatmap
+* Helps understand:
+
+  * True Positives (correct fraud detection)
+  * False Positives (false alarms)
+  * False Negatives (missed frauds)
 
 ---
 
 ##  Results
 
-* Successfully classified fraudulent transactions
-* Balanced dataset improved model performance
-* Achieved ~94% accuracy on unseen data
+* Achieved ~94% accuracy on test data
+* Improved evaluation using Precision, Recall, F1-score
+* Model demonstrates strong generalization
 
 ---
 
-## Technologies Used
+##  Limitations
 
-* Python
-* Pandas
-* NumPy
-* Scikit-learn
-
----
-
-## 📁 Project Structure
-
-```
-Credit-Card-Fraud-Detection/
-│
-├── Credit Card Fraud Detection.ipynb
-├── .gitignore
-├── README.md
-```
-
----
-
-## ⚙️ How to Run
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/narendra-nersu/Credit-Card-Fraud-Detection.git
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   pip install numpy pandas scikit-learn
-   ```
-
-3. Run Jupyter Notebook:
-
-   ```bash
-   jupyter notebook
-   ```
-
----
-
-## Limitations
-
-* Used only Logistic Regression
-* Accuracy metric alone may not be sufficient for fraud detection
-* Undersampling reduces available data
+* Accuracy alone is **not sufficient** for fraud detection
+* Undersampling reduces dataset size
+* Logistic Regression is a baseline model
 
 ---
 
 ##  Future Improvements
 
-* Use Precision, Recall, F1-score
-* Apply SMOTE instead of undersampling
-* Try advanced models (Random Forest, XGBoost)
-* Deploy model using Flask or FastAPI
+*  Apply **SMOTE (Oversampling)**
+*  Try advanced models:
+  * Random Forest
+  * XGBoost
+*  Add ROC-AUC curve
+*  Hyperparameter tuning
+*  Deploy using Flask / FastAPI
 
 ---
+
+##  Tech Stack
+
+* Python
+* Pandas
+* NumPy
+* Scikit-learn
+* Matplotlib
+* Seaborn
+
+
+---
+
+## ⚙️ How to Run
+
+```bash
+git clone https://github.com/narendra-nersu/Credit-Card-Fraud-Detection.git
+cd Credit-Card-Fraud-Detection
+pip install numpy pandas scikit-learn matplotlib seaborn
+jupyter notebook
+```
+
+---
+
+
+
 
